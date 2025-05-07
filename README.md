@@ -36,7 +36,7 @@ The latest version of VIDEO PANNER 3000 includes **BLAZING FAST** 🔥 CUDA acce
 ### Step 1: Clone this AMAZING repository 🤩
 
 ```bash
-git clone https://github.com/MushroomFleet/Pan-Vertical-CLI
+git clone https://github.com/MushroomFleet/Pan-Vertical-UV
 cd Pan-Vertical-CLI
 ```
 
