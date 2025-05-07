@@ -1,6 +1,10 @@
-# 🎬✨ VIDEO PANNER 3000 ✨🎬
+# 🎬✨ VIDEO PANNER 3000 - UV EDITION ✨🎬
 
 > _Transform your boring landscape videos into **EPIC** portrait masterpieces!_ 🔄🔥🔥🔥
+
+## 🆕 UV-Powered Installation
+
+This is the **UV-based version** of [Pan-Vertical-CLI](https://github.com/MushroomFleet/Pan-Vertical-CLI), using [UV](https://github.com/astral-sh/uv) - the **blazingly fast** Python package installer and resolver! 🚀
 
 ## 🤔 What is this madness?! 🤯
 
@@ -33,83 +37,74 @@ The latest version of VIDEO PANNER 3000 includes **BLAZING FAST** 🔥 CUDA acce
 
 ```bash
 git clone https://github.com/MushroomFleet/Pan-Vertical-CLI
-cd video-panner-3000
+cd Pan-Vertical-CLI
 ```
 
-### Step 2: Install dependencies 📦📦📦
+### Step 2: Run the UV installation script 📦⚡
 
-```bash
-# Create a virtual environment (HIGHLY recommended! 👍)
-python -m venv venv
-
-# Activate the virtual environment
-# For Windows 🪟
-venv\Scripts\activate
-# For macOS/Linux 🐧
-source venv/bin/activate
-
-# Install all dependencies (with CUDA support) 🔽
-pip install -r requirements.txt
-
-# Or install manually with components you need:
-# Basic version (without CUDA):
-pip install opencv-python numpy ffmpeg-python
-
-# For CUDA acceleration (NVIDIA GPUs only 🖥️):
-pip install opencv-contrib-python cupy-cuda11x  # For CUDA 11.x
-# Or if you have CUDA 12.x:
-pip install opencv-contrib-python cupy-cuda12x
-
-# Install FFmpeg (system dependency) 🎬
-# For Windows:
-# Download from https://ffmpeg.org/download.html or use Chocolatey:
-choco install ffmpeg
-# For macOS:
-brew install ffmpeg
-# For Ubuntu/Debian:
-sudo apt update && sudo apt install ffmpeg
-```
-
-### Step 3: Set up CUDA Environment Variables ⚙️🔧
-
-The script requires the `CUDA_PATH` environment variable to be set. There are multiple ways to do this:
-
-For Windows:
+#### For Windows 🪟
 ```powershell
-# Find your CUDA installation path
-$env:CUDA_PATH = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8"  # Update version as needed
+# PowerShell script
+.\install-uv.ps1
+
+# Or batch file
+.\install-uv.bat
 ```
 
-For Linux/macOS:
+#### For macOS/Linux 🐧
 ```bash
-export CUDA_PATH=/usr/local/cuda-11.8  # Update version as needed
+# Coming soon! For now, you can manually install UV:
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv venv
+uv pip sync requirements.txt
 ```
 
-You can also set this permanently in your system environment variables or modify your virtual environment activation scripts.
+This script will:
+- ✅ Install UV if it's not already on your system
+- ✅ Create a Python virtual environment
+- ✅ Install all required dependencies
+- ✅ Configure CUDA environment variables (if CUDA is found)
 
-> 📌 **For detailed instructions on all CUDA_PATH setup methods, see our [CUDA Setup Guide](CUDA_PATH.md)** 📌
+### Step 3: Set up CUDA for GPU Acceleration 🖥️🚀
 
-### CUDA Requirements 🖥️🚀
-
-For CUDA acceleration, you'll need:
+The installation script will automatically try to configure CUDA if it's found at the standard location. However, for full GPU acceleration, you'll need:
 
 - NVIDIA GPU with compute capability 3.0 or higher
 - NVIDIA drivers installed (version 418.xx or later)
 - CUDA Toolkit (version 11.x or 12.x is recommended)
-- CuPy package that matches your CUDA version (cupy-cuda11x for CUDA 11.x)
-- Properly set `CUDA_PATH` environment variable ([see our setup guide](CUDA_PATH.md))
+- Additional CUDA libraries like cuDNN for maximum performance
+
+> 📌 **For detailed instructions on setting up CUDA environment variables, see our [CUDA_PATH Guide](CUDA_PATH.md)** 📌
+
+> 📌 **For full GPU acceleration setup including cuDNN and TensorRT, see our [CUDA Setup Guide](CUDA_SETUP.md)** 📌
 
 The tool uses two acceleration methods:
 1. **CuPy** (primary) - Provides fast GPU versions of NumPy operations
 2. **OpenCV CUDA** (secondary) - Falls back to OpenCV's CUDA functions if available
 
-Our code is designed to handle most CUDA configuration internally once `CUDA_PATH` is set. If no GPU is found or there are any issues with CUDA, the tool will safely fall back to CPU processing.
+If no GPU is found or there are any issues with CUDA, the tool will safely fall back to CPU processing.
 
 ## 🚀 How to Use It 🚀
 
 VIDEO PANNER 3000 is SUPER EASY to use! 🙌 Just follow these simple steps:
 
-### 1️⃣ Create a Configuration File 📝
+### 1️⃣ Activate the UV Environment 🔌
+
+#### For Windows 🪟
+```powershell
+# If you're using PowerShell
+.\.venv\Scripts\Activate.ps1
+
+# If you're using Command Prompt
+.\.venv\Scripts\activate.bat
+```
+
+#### For macOS/Linux 🐧
+```bash
+source .venv/bin/activate
+```
+
+### 2️⃣ Create a Configuration File 📝
 
 Create a `config.json` file with your desired settings:
 
@@ -124,13 +119,29 @@ Create a `config.json` file with your desired settings:
 }
 ```
 
-### 2️⃣ Run the Script 🏃‍♂️💨
+### 3️⃣ Run the Script 🏃‍♂️💨
 
 ```bash
 python video_panner.py --config config.json
 ```
 
-### 3️⃣ ENJOY YOUR AMAZING VIDEOS! 🎉🥳🎊
+### 🚀 Quick Test Run (Windows Only)
+
+If you just want to test that everything works, run:
+
+```powershell
+.\start-uv.ps1
+```
+
+or
+
+```
+.\start-uv.bat
+```
+
+This will activate the environment, run a test with a sample configuration, and deactivate when done!
+
+### 4️⃣ ENJOY YOUR AMAZING VIDEOS! 🎉🥳🎊
 
 ## 📋 Configuration Options Explained 📋
 
@@ -304,6 +315,7 @@ Process ALL your product demos with your corporate branding! 📈
 - Set the `CUDA_PATH` environment variable to your CUDA installation path
 - Verify the correct cupy version is installed (matches your CUDA version)
 - Run `nvidia-smi` in terminal to check if your GPU is detected
+- See [CUDA_SETUP.md](CUDA_SETUP.md) for step-by-step instructions to install cuDNN
 
 #### "OpenCV CUDA device count: 0" (but CuPy CUDA works)
 
@@ -320,7 +332,7 @@ To verify CUDA is working:
 
 - Your GPU might be running out of memory - try processing a shorter video
 - Close other GPU-intensive applications while running Video Panner
-- Try reducing batch size by processing videos one at a time
+- Try processing videos one at a time
 - Make sure your system isn't switching to integrated graphics
 - Check if your CUDA version matches the cupy package version
 - As a last resort, disable CUDA by manually downgrading to `opencv-python` instead of `opencv-contrib-python`
@@ -331,6 +343,11 @@ To verify CUDA is working:
 - The tool will automatically fall back to CPU for these specific operations
 - No action needed unless you're concerned about performance
 - If these happen frequently, try updating your GPU drivers
+
+#### "ModuleNotFoundError: No module named 'fastrlock'" or "cudnn64_8.dll -> not found"
+
+- Follow the detailed instructions in [CUDA_SETUP.md](CUDA_SETUP.md) to install all required CUDA components
+- Run the install-uv script again and select "y" when asked to recreate the environment
 
 ## 🤝 Contributing 🤝
 
